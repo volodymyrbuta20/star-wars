@@ -1,0 +1,90 @@
+@import "../../styles/variables.scss";
+
+.characters {
+    background: url('../../services/images/background-main.jpeg') no-repeat center/cover;
+
+    &__header {
+        padding: 40px 80px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__list {
+        margin: 0 auto;
+        padding: 80px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    &__list-item {
+        width: 270px;
+        height: 380px;
+        position: relative;
+        transition: all 0.3s ease-in 0s;
+        border-radius: 8px;
+        &:hover {
+            box-shadow: 0 5px 20px $main-color;
+            transform: translateY(-8px);
+        }
+    }
+
+    &__list-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    &__name {
+        position: absolute;
+        bottom: 0;
+        background-color: rgb(245, 245, 245);;
+        height: 48px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 500;
+        color: #000000;
+    }
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+}
+
+.pagination a {
+    margin: 0 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(154, 153, 152, 0.2);
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+
+.paginationActive {
+    margin: 0 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $main-color;
+    font-weight: bold;
+    border-radius: 50%;
+}

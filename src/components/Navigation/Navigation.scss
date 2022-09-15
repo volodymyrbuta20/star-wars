@@ -1,0 +1,41 @@
+@import "../../styles/variables.scss";
+
+.navigation {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+
+    &__link { 
+        position: relative;
+        margin: 0 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        line-height: 17px;
+        color: #aaa;
+        transition: all 0.3s ease-in;
+    }
+
+    &__link:hover {
+        color: $main-color;
+        svg {
+            fill: $main-color;
+        }
+    }
+
+    &__link svg {
+        margin-right: 5px;
+        transition: all 0.3s ease-in;
+        color: #aaa;
+    }
+}
+
+.active {
+    color: $main-color;
+    svg {
+        fill: $main-color;
+    }
+}

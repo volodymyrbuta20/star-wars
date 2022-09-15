@@ -1,0 +1,87 @@
+@import "../../styles/variables.scss";
+
+.singlevehicle {
+    background: url("../../services/images/background-main.jpeg") center/cover no-repeat;
+
+    &__wrapper {
+        padding: 65px;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+    }
+
+    &__data {
+        width: 100%;
+        margin-right: 50px;
+    }
+
+    &__details,  &__others-data {
+        width: 100%;
+        padding: 20px;
+        background-color: rgb(35 34 28 / 65%);
+        border-radius: 8px;
+        border: 1px solid rgba(230, 183, 30, 0.132);
+    }
+
+    &__details-name {
+        font-weight: 500;
+        font-size: 32px;
+        margin-bottom: 30px;
+        display: inline-block;
+        border-bottom: 2px solid rgb(240, 165, 0);
+    }
+
+    &__details p {
+        font-size: 18px;
+    }
+
+    &__details span {
+        color: $main-color;
+    }
+
+    &__others {
+        margin-top: 25px;
+        display: flex;
+        align-items: start;
+        flex-wrap: wrap;
+        gap: 25px;
+    }
+
+    &__others-data {
+        width: calc(50% - 12.5px);
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    &__others-data-name {
+        margin-bottom: 15px;
+        font-weight: 500;
+        font-size: 24px;
+        display: inline-block;
+        border-bottom: 2px solid rgb(240, 165, 0);
+    }
+
+    &__others-data span {
+        font-size: 18px;
+    }
+
+    &__others-data-list a {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        transition: all 0.2s ease-in;
+    }
+
+    &__others-data-list a:hover {
+        color: $main-color;
+        svg {
+            fill: $main-color;
+        }
+    }
+
+    &__others-data-list svg {
+        margin-right: 7px;
+        transition: all 0.2s ease-in;
+    }
+}
