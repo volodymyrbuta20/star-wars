@@ -1,4 +1,4 @@
-## [Link for Demo] (https://star-wars-sandy.vercel.app/)
+Link for Demo] (https://star-wars-sandy.vercel.app/
 
 
 # Getting Started with Create React App
