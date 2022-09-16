@@ -13,19 +13,18 @@ const useCharacter = (data) => {
     const getFilms = useCallback(async () => {
         try {
             data.films.forEach(async (film) => {
-                const response = await fetch(film);
-                const filmData = await response.json();
-    
-                setFilms((prevState) => {
-                    if (prevState.includes(filmData.title)) return prevState;
-                    return [
-                        ...prevState,
-                        {
-                            title: filmData.title,
-                            url: filmData.url,
-                        },
-                    ];
-                });
+                await fetch(film)
+                    .then((responseData) => responseData.json())
+                    .then((filmData) => setFilms((prevState) => {
+                        if (prevState.includes(filmData.title)) return prevState;
+                        return [
+                            ...prevState,
+                            {
+                                title: filmData.title,
+                                url: filmData.url,
+                            },
+                        ];
+                    }));
             });
         } catch {
         } finally {
@@ -36,10 +35,9 @@ const useCharacter = (data) => {
     const getStarships = useCallback(async () => {
         try {
             data.starships.forEach(async (starship) => {
-                const response = await fetch(starship);
-                const starshipData = await response.json();
-    
-                setStarships((prevstate) => {
+                await fetch(starship)
+                    .then((responseData) => responseData.json())
+                    .then((starshipData) => setStarships((prevstate) => {
                     if (prevstate.includes(starshipData.name)) return;
                     return [
                         ...prevstate,
@@ -48,7 +46,7 @@ const useCharacter = (data) => {
                             url: starshipData.url,
                         }
                     ];
-                });
+                }));
             });
         } catch {
         } finally {
@@ -59,10 +57,9 @@ const useCharacter = (data) => {
     const getVehicles = useCallback(async () => {
         try {
             data.vehicles.forEach(async (vehicle) => {
-                const response = await fetch(vehicle);
-                const vehicleData = await response.json();
-    
-                setVehicles((prevstate) => {
+                await fetch(vehicle)
+                    .then((responseData) =>responseData.json())
+                    .then((vehicleData) => setVehicles((prevstate) => {
                     if (prevstate.includes(vehicleData.name)) return;
                     return [
                         ...prevstate,
@@ -71,7 +68,7 @@ const useCharacter = (data) => {
                             url: vehicleData.url,
                         }
                     ];
-                });
+                }));
             });
         } catch {
         } finally {

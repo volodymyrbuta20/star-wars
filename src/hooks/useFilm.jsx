@@ -11,8 +11,8 @@ const useFilm = (data) => {
 
     const getCharacters = useCallback(async () => {
         try {
-            data.characters.forEach((character) => {
-                fetch(character)
+            data.characters.forEach(async (character) => {
+                await fetch(character)
                     .then((responseData) => responseData.json())
                     .then((characterData) => setCharacters((prevstate) => {
                         if (prevstate.includes(characterData.name)) return prevstate;
@@ -33,8 +33,8 @@ const useFilm = (data) => {
 
     const getStarships = useCallback(async () => {
         try {
-            data.starships.forEach((starship) => {
-                fetch(starship)
+            data.starships.forEach(async (starship) => {
+                await fetch(starship)
                     .then((responseData) => responseData.json())
                     .then((starshipsData) => setStarships((prevstate) => {
                         if (prevstate.includes(starshipsData.name)) return prevstate;
@@ -55,8 +55,8 @@ const useFilm = (data) => {
 
     const getVehicles = useCallback(async () => {
         try {
-            data.vehicles.forEach((vehicle) => {
-                fetch(vehicle)
+            data.vehicles.forEach(async (vehicle) => {
+                await fetch(vehicle)
                     .then((responseData) => responseData.json())
                     .then((vehiclesData) => setVehicles((prevstate) => {
                         if (prevstate.includes(vehiclesData.name)) return prevstate;
@@ -77,8 +77,8 @@ const useFilm = (data) => {
 
     const getPlanets = useCallback(async () => {
         try {
-            data.planets.forEach((planet) => {
-                fetch(planet)
+            data.planets.forEach(async (planet) => {
+                await fetch(planet)
                     .then((responseData) => responseData.json())
                     .then((planetsData) => setPlanets((prevstate) => {
                         if (prevstate.includes(planetsData.name)) return prevstate;
@@ -99,8 +99,8 @@ const useFilm = (data) => {
 
     const getSpecies = useCallback(async () => {
         try {
-            data.species.forEach((specie) => {
-                fetch(specie)
+            data.species.forEach(async (specie) => {
+                await fetch(specie)
                     .then((responseData) => responseData.json())
                     .then((speciesData) => setSpecies((prevstate) => {
                         if (prevstate.includes(speciesData.name)) return prevstate;

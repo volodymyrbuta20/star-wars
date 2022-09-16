@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { useParams, Link } from 'react-router-dom';
 import StarWarsService from '../../services/StarWarsService';
 import useStarship from "../../hooks/useStarship";
+import ReactImageFallback from "react-image-fallback";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { GiCharacter, GiFilmProjector } from "react-icons/gi";
+import ErrorImg from "../../services/images/no-image-icon-21.png"
 
 import "./SingleStarship.scss";
 
@@ -37,9 +39,11 @@ const SingleStarship = () => {
                         <Details starship={starship}/>
                         <Others starship={starship}/>
                     </div>
-                    <div className="singlestarship__image">
-                        <img src={`https://starwars-visualguide.com/assets/img/starships/${starshipId}.jpg`} alt="" />
-                    </div>
+                    <ReactImageFallback 
+                        className="singlestarship__image"
+                        src={`https://starwars-visualguide.com/assets/img/starships/${starshipId}.jpg`} 
+                        fallbackImage={ErrorImg}
+                        alt={starship.name}/>
                 </div>
             )}
         </div>

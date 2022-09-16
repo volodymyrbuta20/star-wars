@@ -110,7 +110,7 @@ const Others = ({film}) => {
                 <ul className="singlefilm__others-data-list">
                     {vehicles.map(vehicle => (
                         <li key={vehicle.url}>
-                            <Link to={`/${getUrlId(vehicle.url)}`}>
+                            <Link to={`/vehicles/${getUrlId(vehicle.url)}`}>
                                 <GiSpaceship/>
                                 {vehicle.name}
                             </Link>
@@ -123,7 +123,7 @@ const Others = ({film}) => {
                 <ul className="singlefilm__others-data-list">
                     {starships.map(starship => (
                         <li key={starship.url}>
-                            <Link to={`/${getUrlId(starship.url)}`}>
+                            <Link to={`/starships/${getUrlId(starship.url)}`}>
                                 <GiStarfighter/>
                                 {starship.name}
                             </Link>
