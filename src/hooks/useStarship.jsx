@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import useHttp from './http.hook';
 
 const useStarship = (data) => {
 
@@ -6,11 +7,12 @@ const useStarship = (data) => {
     const [pilots, setpilots] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const {request, loading} = useHttp();
+
     const getFilms = useCallback(async () => {
         try {
             data.films.forEach((film) => {
-                fetch(film)
-                    .then((responseData) => responseData.json())
+                request(film)
                     .then((filmData) => setFilms((prevstate) => {
                         if (prevstate.includes(filmData.title)) return prevstate;
                         return [
@@ -26,13 +28,12 @@ const useStarship = (data) => {
         } finally {
             setIsLoading(false)
         }
-    }, [data.films]);
+    }, [data.films, request]);
 
     const getPilots = useCallback(async () => {
         try {
             data.pilots.forEach((pilot) => {
-                fetch(pilot)
-                    .then((responseData) => responseData.json())
+                request(pilot)
                     .then((pilotData) => setpilots((prevstate) => {
                         if (prevstate.includes(pilotData.name)) return prevstate;
                         return [
@@ -48,7 +49,7 @@ const useStarship = (data) => {
         } finally {
             setIsLoading(false)
         }
-    }, [data.pilots])
+    }, [data.pilots, request])
 
     useEffect(() => {
         getFilms();
@@ -58,7 +59,7 @@ const useStarship = (data) => {
         getPilots()
     }, [getPilots])
 
-    return {films, pilots, isLoading}
+    return {films, pilots, isLoading, loading}
 }
 
 export default useStarship;

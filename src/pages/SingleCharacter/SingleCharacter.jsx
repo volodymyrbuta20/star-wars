@@ -29,15 +29,19 @@ const SingleCharacter = () => {
         updateCharacter()
     }, []);
 
-    const {isLoading} = useCharacter(character)
+    const {loading: characterLoading} = useCharacter(character)
 
     return (
         <div className="character">
             {loading ? <Spinner/> : (
                 <div className="character__wrapper">
                     <div className="character__data">
-                        {isLoading ? <Spinner/> : <Details character={character}/>}
-                        {isLoading ? <Spinner/> : <Others character={character}/>}
+                        {characterLoading ? <Spinner/> : (
+                            <>
+                                <Details character={character}/>
+                                <Others character={character}/>
+                            </>
+                        )}
                     </div>
                     <div className="character__image">
                         <img src={`https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`} alt={character.name} />
@@ -98,10 +102,10 @@ const Others = ({character}) => {
                     <ul>
                         {vehicles.map(vehicle => (
                             <li key={vehicle.url}>
-                                <a href="#" className="character__others-link">
+                                <Link to={`/vehicles/${getUrlId(vehicle.url)}`} className="character__others-link">
                                     <GiSpaceship/>
                                     {vehicle.name}
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>

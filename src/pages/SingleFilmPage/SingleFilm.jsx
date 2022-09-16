@@ -29,14 +29,20 @@ const SingleFilm = () => {
         updateFilm()
     }, []);
 
+    const {loading: filmLoading} = useFilm(film);
+
     return (
         <div className="singlefilm">
             {loading ? <Spinner/> : (
                 <div className="singlefilm__wrapper">
                     <div className="singlefilm__data">
-                        <Details film={film}/>
-                        <Characters film={film}/>
-                        <Others film={film}/>
+                        {filmLoading ? <Spinner/> : (
+                            <>
+                                <Details film={film}/>
+                                <Characters film={film}/>
+                                <Others film={film}/>
+                            </>
+                        )}
                     </div>
                     <div className="singlefilm__image">
                         <img src={`https://starwars-visualguide.com/assets/img/films/${filmId}.jpg`} alt="" />

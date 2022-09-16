@@ -29,13 +29,19 @@ const SingleVehicle = () => {
         updateVehicle()
     },[]);
 
+    const {loading: vehicleLoading} = useStarship(vehicle);
+
     return (
         <div className="singlevehicle">
             {loading ? <Spinner/> : (
                 <div className="singlevehicle__wrapper">
                     <div className="singlevehicle__data">
-                        <Details vehicle={vehicle}/>
-                        <Others vehicle={vehicle}/>
+                        {vehicleLoading ? <Spinner/> : (
+                            <>
+                                <Details vehicle={vehicle}/>
+                                <Others vehicle={vehicle}/>
+                            </>
+                        )}
                     </div>
                     <div className="singlevehicle__image">
                         <img src={`https://starwars-visualguide.com/assets/img/vehicles/${vehicleId}.jpg`} alt="" />

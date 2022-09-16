@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import useHttp from './http.hook';
 
 const useFilm = (data) => {
 
@@ -9,11 +10,12 @@ const useFilm = (data) => {
     const [species, setSpecies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const {request, loading} = useHttp();
+
     const getCharacters = useCallback(async () => {
         try {
-            data.characters.forEach(async (character) => {
-                await fetch(character)
-                    .then((responseData) => responseData.json())
+            data.characters.forEach((character) => {
+                request(character)
                     .then((characterData) => setCharacters((prevstate) => {
                         if (prevstate.includes(characterData.name)) return prevstate;
                         return [
@@ -29,13 +31,12 @@ const useFilm = (data) => {
         } finally {
             setIsLoading(false);
         }
-    }, [data.characters]);
+    }, [data.characters, request]);
 
     const getStarships = useCallback(async () => {
         try {
-            data.starships.forEach(async (starship) => {
-                await fetch(starship)
-                    .then((responseData) => responseData.json())
+            data.starships.forEach((starship) => {
+                request(starship)
                     .then((starshipsData) => setStarships((prevstate) => {
                         if (prevstate.includes(starshipsData.name)) return prevstate;
                         return [
@@ -51,13 +52,12 @@ const useFilm = (data) => {
         } finally {
             setIsLoading(false);
         }
-    }, [data.starships]);
+    }, [data.starships, request]);
 
     const getVehicles = useCallback(async () => {
         try {
-            data.vehicles.forEach(async (vehicle) => {
-                await fetch(vehicle)
-                    .then((responseData) => responseData.json())
+            data.vehicles.forEach((vehicle) => {
+                request(vehicle)
                     .then((vehiclesData) => setVehicles((prevstate) => {
                         if (prevstate.includes(vehiclesData.name)) return prevstate;
                         return [
@@ -73,13 +73,12 @@ const useFilm = (data) => {
         } finally {
             setIsLoading(false);
         }
-    }, [data.vehicles]);
+    }, [data.vehicles, request]);
 
     const getPlanets = useCallback(async () => {
         try {
-            data.planets.forEach(async (planet) => {
-                await fetch(planet)
-                    .then((responseData) => responseData.json())
+            data.planets.forEach((planet) => {
+                request(planet)
                     .then((planetsData) => setPlanets((prevstate) => {
                         if (prevstate.includes(planetsData.name)) return prevstate;
                         return [
@@ -95,13 +94,12 @@ const useFilm = (data) => {
         } finally {
             setIsLoading(false);
         }
-    }, [data.planets]);
+    }, [data.planets, request]);
 
     const getSpecies = useCallback(async () => {
         try {
-            data.species.forEach(async (specie) => {
-                await fetch(specie)
-                    .then((responseData) => responseData.json())
+            data.species.forEach((specie) => {
+                request(specie)
                     .then((speciesData) => setSpecies((prevstate) => {
                         if (prevstate.includes(speciesData.name)) return prevstate;
                         return [
@@ -117,7 +115,7 @@ const useFilm = (data) => {
         } finally {
             setIsLoading(false);
         }
-    }, [data.species]);
+    }, [data.species, request]);
 
     useEffect(() => {
         getCharacters()
@@ -139,7 +137,7 @@ const useFilm = (data) => {
         getSpecies()
     }, [getSpecies])
 
-    return {characters, starships, vehicles, planets, species, isLoading}
+    return {characters, starships, vehicles, planets, species, isLoading, loading}
 }
 
 export default useFilm;

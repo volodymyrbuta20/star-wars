@@ -31,13 +31,19 @@ const SingleStarship = () => {
         updateStarship()
     },[]);
 
+    const {loading: starshipLoading} = useStarship(starship);
+
     return (
         <div className="singlestarship">
             {loading ? <Spinner/> : (
                 <div className="singlestarship__wrapper">
                     <div className="singlestarship__data">
-                        <Details starship={starship}/>
-                        <Others starship={starship}/>
+                        {starshipLoading ? <Spinner/> : (
+                            <>
+                                <Details starship={starship}/>
+                                <Others starship={starship}/>
+                            </>
+                        )}
                     </div>
                     <ReactImageFallback 
                         className="singlestarship__image"
