@@ -7,7 +7,10 @@ import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import InputSearch from '../../components/InputSearch/InputSearch';
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import ErrorImg from "../../services/images/no-image-icon-21.png"
+import ErrorImg from "../../services/images/no-image-icon-21.png";
+import { _apiBase } from '../../utils/baseUrl';
+import useHttp from '../../hooks/http.hook';
+import getUrlId from '../../utils/getUrlId';
 
 import "./Starships.scss";
 
@@ -18,17 +21,17 @@ const Starships = () => {
     const [page, setPage] = useState(1);
     const [inputSearch, setInputSearch] = useState('');
 
-    const {_apiBase, _transformStarship, request, loading, error} = StarWarsService();
+    const {request, loading, error} = useHttp();
 
     const getData = useCallback(async () => {
         const response = await request(`${_apiBase}starships/?page=${page}`);
         setData(response);
-        setStarshipsList(response.results.map(_transformStarship));
+        setStarshipsList(response.results);
     }, [page])
 
     const getFilteredData = useCallback(async () => {
         const response = await request(`${_apiBase}starships/?search=${inputSearch}`);
-        setStarshipsList(response.results.map(_transformStarship));
+        setStarshipsList(response.results);
         setData(response);
     }, [inputSearch])
 
@@ -68,9 +71,9 @@ const Starships = () => {
                 <ul className="starships__list">
                     {starshipsList.map(starship => (
                         <li className="starships__list-item" key={starship.name}>
-                            <Link to={`/starships/${starship.id}`}>
+                            <Link to={`/starships/${getUrlId(starship.url)}`}>
                                 <ReactImageFallback 
-                                    src={`https://starwars-visualguide.com/assets/img/starships/${starship.id}.jpg`} 
+                                    src={`https://starwars-visualguide.com/assets/img/starships/${getUrlId(starship.url)}.jpg`} 
                                     fallbackImage={ErrorImg}
                                     alt={starship.name} />
                                 <div className="starships__name">{starship.name}</div>

@@ -7,7 +7,10 @@ import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import InputSearch from '../../components/InputSearch/InputSearch';
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import ErrorImg from "../../services/images/no-image-icon-21.png"
+import ErrorImg from "../../services/images/no-image-icon-21.png";
+import { _apiBase } from '../../utils/baseUrl';
+import useHttp from '../../hooks/http.hook';
+import getUrlId from '../../utils/getUrlId';
 
 import "./Vehicles.scss";
 
@@ -18,17 +21,17 @@ const Vehicles = () => {
     const [page, setPage] = useState(1);
     const [inputSearch, setInputSearch] = useState('');
 
-    const {_apiBase, _transformVehicle, request, loading, error} = StarWarsService();
+    const {request, loading, error} = useHttp();
 
     const getData = useCallback(async () => {
         const response = await request(`${_apiBase}vehicles/?page=${page}`);
         setData(response);
-        setVehiclesList(response.results.map(_transformVehicle));
+        setVehiclesList(response.results);
     }, [page])
 
     const getFilteredData = useCallback(async () => {
         const response = await request(`${_apiBase}vehicles/?search=${inputSearch}`);
-        setVehiclesList(response.results.map(_transformVehicle));
+        setVehiclesList(response.results);
         setData(response);
     }, [inputSearch])
 
@@ -68,9 +71,9 @@ const Vehicles = () => {
                 <ul className="vehicles__list">
                     {vehiclesList.map(vehicle => (
                         <li className="vehicles__list-item" key={vehicle.name}>
-                            <Link to={`/vehicles/${vehicle.id}`}>
+                            <Link to={`/vehicles/${getUrlId(vehicle.url)}`}>
                                 <ReactImageFallback 
-                                    src={`https://starwars-visualguide.com/assets/img/vehicles/${vehicle.id}.jpg`} 
+                                    src={`https://starwars-visualguide.com/assets/img/vehicles/${getUrlId(vehicle.url)}.jpg`} 
                                     fallbackImage={ErrorImg}
                                     alt={vehicle.name} />
                                 <div className="vehicles__name">{vehicle.name}</div>

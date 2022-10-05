@@ -1,13 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ReactImageFallback from "react-image-fallback";
-import StarWarsService from '../../services/StarWarsService';
 import InputSearch from '../../components/InputSearch/InputSearch';
 import ReactPaginate from "react-paginate";
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ErrorImg from "../../services/images/no-image-icon-21.png"
+import getUrlId from '../../utils/getUrlId';
+import { _apiBase } from '../../utils/baseUrl';
+import useHttp from '../../hooks/http.hook';
 
 import "./Characters.scss"
 
@@ -18,19 +20,19 @@ const Characters = () => {
     const [page, setPage] = useState(1);
     const [inputSearch, setInputSearch] = useState('');
 
-    const {_apiBase, _transformCharacter, request, loading, error} = StarWarsService();
+    const {request, loading, error} = useHttp();
 
     const getData = useCallback(async () => {
         const response = await request(`${_apiBase}people/?page=${page}`);
         setData(response);
-        setCharList(response.results.map(_transformCharacter));
+        setCharList(response.results);
     }, [page])
 
     const getFilteredData = useCallback(async () => {
         const response = await request(`${_apiBase}people/?search=${inputSearch}`);
 
         setData(response);
-        setCharList(response.results.map(_transformCharacter));
+        setCharList(response.results);
     }, [inputSearch])
 
     useEffect(() => {
@@ -72,10 +74,10 @@ const Characters = () => {
             {spinner}
             <ul className="characters__list">
                 {charList.map(item => (
-                    <li className="characters__list-item" key={item.id}>
-                        <Link to={`/${item.id}`}>
+                    <li className="characters__list-item" key={getUrlId(item.url)}>
+                        <Link to={`/characters/${getUrlId(item.url)}`}>
                             <ReactImageFallback 
-                                src={`https://starwars-visualguide.com/assets/img/characters/${item.id}.jpg`} 
+                                src={`https://starwars-visualguide.com/assets/img/characters/${getUrlId(item.url)}.jpg`} 
                                 fallbackImage={ErrorImg}
                                 alt={item.name} />
                             <div className="characters__name">{item.name}</div>
