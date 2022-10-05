@@ -1,0 +1,41 @@
+@import "../../styles/variables.scss";
+
+.input {
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+}
+  
+  .input:focus {
+    background-color: grey;
+    color: $main-color;
+    border: 1px solid $main-color;
+    caret-color: $main-color;
+}
+  
+  .input:focus::placeholder {
+    color: white;
+}
+  
+  .input--expand {
+    width: 100%;
+}
+  
+  .input--error {
+    border: 1px solid red;
+}
+  
+  .input--error::placeholder {
+    color: red;
+}
+  
+  .input__errors {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0.6em 0;
+    color: red;
+    text-align: left;
+}
