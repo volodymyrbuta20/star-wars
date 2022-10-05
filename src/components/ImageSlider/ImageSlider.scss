@@ -1,0 +1,101 @@
+@import "../../styles/variables.scss";
+
+.slider {
+    position: relative;
+    overflow: hidden;
+
+    &__container {
+        margin: 60px 0;
+        display: flex;
+    }
+
+    &__button {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        padding: 6px;
+        top: 50%;
+        font-size: 30px;
+        color: white;
+        background-color: rgba(32, 32, 32, 0.5);
+        border: none;
+        border-radius: 2px;
+        user-select: none;
+        transition: background-color 0.15s linear;
+        z-index: 10;
+        cursor: pointer;
+    }
+
+    &__button:hover {
+        background-color: rgba(8, 8, 8, 0.7);
+    }
+
+    &__button svg {
+        position: absolute;
+        top: 5px;
+        left: 20%;
+    }
+      
+    &__button--left {
+    left: 24px;
+    }
+    
+    &__button--right {
+    right: 24px;
+    }
+
+    &__item {
+        position: relative;
+        transition: transform 1s ease;
+    }
+
+    &__info--light {
+        color: white;
+    }
+      
+    &__info--dark h2 {
+        color: black;
+    }
+
+    &__info--dark p {
+        color: black;
+    }
+
+    &__image {
+        width: 100vw;
+        height: 100%;
+    }
+
+    &__info {
+        position: absolute;
+        top: 50px;
+        left: 150px;
+        width: 30%;
+        text-align: left;
+        z-index: 10;
+    }
+
+    &__info h2 {
+        font-size: 48px;
+    }
+      
+    &__info p {
+        font-size: 24px;
+        margin-bottom: 32px;
+    }
+      
+    &__info a {
+        padding: 15px 32px;
+        color: white;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background-color: $main-color;
+    }
+
+    &__info a:hover {
+        background-color: #ddc187;
+    }
+}
