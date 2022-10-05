@@ -1,12 +1,13 @@
 import { useState, useEffect} from "react";
 import { useParams, Link } from 'react-router-dom';
-import StarWarsService from '../../services/StarWarsService';
-import useStarship from "../../hooks/useStarship";
 import ReactImageFallback from "react-image-fallback";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { GiCharacter, GiFilmProjector } from "react-icons/gi";
-import ErrorImg from "../../services/images/no-image-icon-21.png"
+import ErrorImg from "../../services/images/no-image-icon-21.png";
+import getUrlId from '../../utils/getUrlId';
+import { _apiBase } from '../../utils/baseUrl';
+import useHttp from '../../hooks/http.hook';
 
 import "./SingleStarship.scss";
 
@@ -15,35 +16,39 @@ const SingleStarship = () => {
     const {starshipId} = useParams();
 
     const [starship, setStarship] = useState({});
+    const [films, setFilms] = useState([]);
+    const [pilots, setPilots] = useState([]);
 
-    const {getStarship, loading, error} = StarWarsService();
+    const {loading, error, request} = useHttp();
 
-    const updateStarship = () => {
-        getStarship(starshipId)
-            .then(onStarshipLoaded)
-    };
+    const retrieveList = async (array) => {
 
-    const onStarshipLoaded = (starship) => {
-        setStarship(starship);
+        let dataList = []
+        for (let url of array) {
+          dataList = [...dataList, await request(url)]
+        }
+        return dataList
     }
 
     useEffect(() => {
-        updateStarship()
+        const getStarship = async () => {
+            const dataStarship = await request (`${_apiBase}starships/${starshipId}`)
+            setStarship(dataStarship)
+            const dataFilms = await retrieveList(dataStarship.films)
+            setFilms(dataFilms)
+            const dataPilots = await retrieveList(dataStarship.pilots)
+            setPilots(dataPilots)
+        }
+        getStarship()
     },[]);
-
-    const {loading: starshipLoading} = useStarship(starship);
 
     return (
         <div className="singlestarship">
             {loading ? <Spinner/> : (
                 <div className="singlestarship__wrapper">
                     <div className="singlestarship__data">
-                        {starshipLoading ? <Spinner/> : (
-                            <>
-                                <Details starship={starship}/>
-                                <Others starship={starship}/>
-                            </>
-                        )}
+                        <Details starship={starship}/>
+                        <Others films={films} pilots={pilots}/>
                     </div>
                     <ReactImageFallback 
                         className="singlestarship__image"
@@ -57,17 +62,17 @@ const SingleStarship = () => {
 }
 
 const Details = ({starship}) => {
-    const {name, model, manufacturer, shipClass, price, speed, mglt, length, crew, passengers} = starship;
+    const {name, model, manufacturer, starship_class, cost_in_credits, max_atmosphering_speed, MGLT, length, crew, passengers} = starship;
 
     return (
         <div className="singlestarship__details">
             <h2 className="singlestarship__details-name">{name}</h2>
             <p>Model: <span>{model}</span> </p>
             <p>Manufacturer: <span>{manufacturer}</span></p>
-            <p>Class: <span>{shipClass}</span></p>
-            <p>Price: <span>{price}</span></p>
-            <p>Speed: <span>{speed}</span></p>
-            <p>MGLT: <span>{mglt}</span></p>
+            <p>Class: <span>{starship_class}</span></p>
+            <p>Price: <span>{cost_in_credits}</span></p>
+            <p>Speed: <span>{max_atmosphering_speed}</span></p>
+            <p>MGLT: <span>{MGLT}</span></p>
             <p>length: <span>{length}</span></p>
             <p>Crew: <span>{crew}</span></p>
             <p>Passengers: <span>{passengers}</span></p>
@@ -75,12 +80,7 @@ const Details = ({starship}) => {
     )
 }
 
-const Others = ({starship}) => {
-
-    const {films, pilots} = useStarship(starship);
-    const getUrlId = (url) => {
-        return url.split('/').splice(-2, 1)[0];
-    }
+const Others = ({films, pilots}) => {
 
     return (
         <div className="singlestarship__others">
@@ -103,7 +103,7 @@ const Others = ({starship}) => {
                     <ul className="singlestarship__others-data-list">
                         {pilots.map(pilot => (
                             <li key={pilot.name}>
-                                <Link to={`/${getUrlId(pilot.url)}`}>
+                                <Link to={`/characters/${getUrlId(pilot.url)}`}>
                                     <GiCharacter/>
                                     {pilot.name}
                                 </Link>

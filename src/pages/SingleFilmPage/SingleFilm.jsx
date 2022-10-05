@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from 'react-router-dom';
-import StarWarsService from '../../services/StarWarsService';
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { GiStarfighter, GiCharacter, GiSpaceship, GiRingedPlanet} from "react-icons/gi";
-import useFilm from "../../hooks/useFilm";
+import useHttp from "../../hooks/http.hook";
+import getUrlId from "../../utils/getUrlId";
+import { _apiBase } from "../../utils/baseUrl";
 
 import "./SingleFilm.scss";
 
@@ -12,37 +13,51 @@ const SingleFilm = () => {
 
     const {filmId} = useParams();
 
-    const [film, setFilm] = useState({})
+    const [film, setFilm] = useState({});
+    const [characters, setCharacters] = useState([]);
+    const [planets, setPlanets] = useState([]);
+    const [starships, setStarships] = useState([]);
+    const [vehicles, setVehicles] = useState([]);
+    const [species, setSpecies] = useState([]);
 
-    const { getFilm, loading, error} = StarWarsService();
+    const { loading, error, request} = useHttp();
 
-    const updateFilm = () => {
-        getFilm(filmId)
-            .then(onFilmLoaded)
-    };
+    const retrieveList = async (array) => {
 
-    const onFilmLoaded = (film) => {
-        setFilm(film)
+        let dataList = []
+        for (let url of array) {
+          dataList = [...dataList, await request(url)]
+        }
+        return dataList
+      
     }
 
     useEffect(() => {
-        updateFilm()
+        const getFilm = async () => {
+            const dataFilm = await request(`${_apiBase}films/${filmId}`)
+            setFilm(dataFilm)
+            const dataCharacters = await retrieveList(dataFilm.characters)
+            setCharacters(dataCharacters)
+            const dataPlanets = await retrieveList(dataFilm.planets)
+            setPlanets(dataPlanets)
+            const dataStarships = await retrieveList(dataFilm.starships)
+            setStarships(dataStarships)
+            const dataVehicles = await retrieveList(dataFilm.vehicles)
+            setVehicles(dataVehicles)
+            const dataSpecies = await retrieveList(dataFilm.species)
+            setSpecies(dataSpecies)
+        }
+        getFilm()
     }, []);
-
-    const {loading: filmLoading} = useFilm(film);
 
     return (
         <div className="singlefilm">
             {loading ? <Spinner/> : (
                 <div className="singlefilm__wrapper">
                     <div className="singlefilm__data">
-                        {filmLoading ? <Spinner/> : (
-                            <>
-                                <Details film={film}/>
-                                <Characters film={film}/>
-                                <Others film={film}/>
-                            </>
-                        )}
+                        <Details film={film}/>
+                        <Characters characters={characters}/>
+                        <Others starships={starships} vehicles={vehicles} planets={planets} species={species}/>
                     </div>
                     <div className="singlefilm__image">
                         <img src={`https://starwars-visualguide.com/assets/img/films/${filmId}.jpg`} alt="" />
@@ -54,24 +69,20 @@ const SingleFilm = () => {
 }
 
 const Details = ({film}) => {
-    const {name, date, director, producer, sinopse} = film;
+    const {title, release_date, director, producer, opening_crawl} = film;
 
     return (
         <div className="singlefilm__details">
-            <h2 className="singlefilm__details-name">{name}</h2>
-            <p>Release date: <span>{date}</span> </p>
+            <h2 className="singlefilm__details-name">{title}</h2>
+            <p>Release date: <span>{release_date}</span> </p>
             <p>Director: <span>{director}</span> </p>
             <p>Producer: <span>{producer}</span> </p>
-            <p>Opening crawl: <span>{sinopse}</span> </p>
+            <p>Opening crawl: <span>{opening_crawl}</span> </p>
         </div>
     )
 }
 
-const Characters = ({film}) => {
-    const {characters} = useFilm(film);
-    const getUrlId = (url) => {
-        return url.split('/').splice(-2, 1)[0];
-    }
+const Characters = ({characters}) => {
 
     return (
         <div className="singlefilm__characters">
@@ -79,7 +90,7 @@ const Characters = ({film}) => {
             <ul className="singlefilm__characters-list">
                 {characters.map(character => (
                     <li key={character.name}>
-                        <Link to={`/${getUrlId(character.url)}`}>
+                        <Link to={`/characters/${getUrlId(character.url)}`}>
                             <GiCharacter/>
                             {character.name}
                         </Link>
@@ -90,11 +101,7 @@ const Characters = ({film}) => {
     )
 }
 
-const Others = ({film}) => {
-    const {starships, vehicles, planets, species} = useFilm(film);
-    const getUrlId = (url) => {
-        return url.split('/').splice(-2, 1)[0];
-    }
+const Others = ({starships, vehicles, planets, species}) => {
 
     return (
         <div className="singlefilm__others">
