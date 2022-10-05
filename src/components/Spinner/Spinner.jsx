@@ -5,7 +5,7 @@ const Spinner = () => {
     <div>
         <svg 
             xmlns="http://www.w3.org/2000/svg"
-            style= {{margin: "auto", background: "none", display: "block"}}
+            style= {{margin: "auto", background: "none", display: "block", padding: "40px 0"}}
             width="317px" 
             height="317px" 
             viewBox="0 0 100 100" 
