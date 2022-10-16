@@ -43,7 +43,7 @@ const FormRegister = ({openModal, closeModal, setIsSuccess, setUsers}) => {
                         "Must Contain 6 Characters, One Letter, One Number"
                     ),
                 confirmPassword: Yup.string()
-                    .required()
+                    .required("This field is required")
                     .oneOf([Yup.ref('password')], 'Passwords does not match'),
             })}
             onSubmit = {handleSubmit}>
@@ -95,6 +95,7 @@ const FormRegister = ({openModal, closeModal, setIsSuccess, setUsers}) => {
                 <div className="register__footer">
                     <p>Already have account?</p>
                     <button 
+                        type="button"
                         className="register__btn" 
                         onClick={() => {openModal(true); closeModal(false)}}>
                             Sign In

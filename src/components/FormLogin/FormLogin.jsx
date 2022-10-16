@@ -44,6 +44,7 @@ const FormLogin = ({openModal, closeModal, users, setLogged}) => {
                         Log In
                 </button>
                 <button 
+                    type="button"
                     className="login__btn" 
                     onClick={() => {openModal(true); closeModal(false)}}>
                         Create an account
