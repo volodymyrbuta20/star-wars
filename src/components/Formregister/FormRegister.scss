@@ -3,7 +3,7 @@
 .register {
 
     &__title {
-        margin: 40px;
+        margin: 20px 0 10px 0;
         text-align: center;
     }
 
@@ -14,10 +14,30 @@
     }
 
     &__data input {
+        margin-top: 15px;
         width: 100%;
+        padding: 10px;
+        border-radius: 3px;
+        outline: none;
+        border: none;
+        color: #aaa;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    &__data input:focus {
+        background-color: grey;
+        color: $main-color;
+        border: 1px solid $main-color;
+        caret-color: $main-color;
+    }
+
+    &__data input:focus::placeholder {
+        color: white;
     }
 
     &__submit {
+        margin-top: 20px;
         width: 100%;
         height: 40px;
         background-color: rgb(67, 65, 57);
@@ -46,4 +66,11 @@
         border: none;
         cursor: pointer;
     }
+}
+
+.error {
+    margin-top: 5px;
+    width: 100%;
+    text-align: left;
+    color: red;
 }

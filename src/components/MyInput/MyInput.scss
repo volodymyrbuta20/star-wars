@@ -1,12 +1,13 @@
 @import "../../styles/variables.scss";
 
 .input {
-    height: 40px;
-    padding: 0 15px;
-    line-height: 40px;
+    padding: 10px 15px;
     border-radius: 3px;
     outline: none;
     border: none;
+    color: #aaa;
+    font-size: 14px;
+    font-weight: 500;
 }
   
   .input:focus {

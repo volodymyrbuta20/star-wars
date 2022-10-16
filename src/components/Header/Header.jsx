@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import {FaFacebook, FaInstagram, FaTwitter, FaYoutube} from "react-icons/fa";
+import {FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaRegUser} from "react-icons/fa";
 import "./Header.scss"
 import logo from "../../services/images/sw-logo.png"
 
-const Header = ({openLoginModal, openRegisterModal}) => {
+const Header = ({openLoginModal, openRegisterModal, setLogged, logged}) => {
 
     return (
         <div className="header">
@@ -27,11 +27,18 @@ const Header = ({openLoginModal, openRegisterModal}) => {
                 <Link to="/" className="header__logo">
                     <img src={logo} alt="logo" />
                 </Link>
+                {logged.login
+                    ?
+                <div className="header__name">
+                    <FaRegUser/>
+                    <p>{logged.display}</p>
+                    <button onClick={() => setLogged({display: "", login: false})}>Log Out</button>
+                </div>
+                    :
                 <div className="header__login">
                     <button onClick={() => openLoginModal(true)}>Log in</button>
-                    <p> &nbsp; / &nbsp; </p>
                     <button onClick={() => openRegisterModal(true)}>Sign Up</button>
-                </div>
+                </div>}
             </div>
         </div>
     )

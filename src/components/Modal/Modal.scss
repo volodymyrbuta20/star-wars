@@ -2,23 +2,26 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    bottom: 0;
+    right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 50;
-    transform: scale(0);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
 
     &__container {
-        padding: 40px 20px;
+        padding: 20px 40px;
         position: relative;
         max-width: 540px;
         width: 100%;
         border-radius: 8px;
         background-color: rgb(39, 39, 39);
         transition: all 0.35s ease;
+        transform: scale(0.4);
     }
 
     &__close {
@@ -50,6 +53,13 @@
 }
 
 .modal.active {
+    opacity: 1;
+    transition: all 0.3s ease;
+    pointer-events: all;
+}
+
+.modal__container.visible {
     transform: scale(1);
+    transition: all 0.35s ease;
 }
 

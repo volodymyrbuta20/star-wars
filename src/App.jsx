@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import useLocalstorage from "./hooks/useLocalstorage";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
@@ -11,21 +12,45 @@ import FormRegister from "./components/Formregister/FormRegister";
 function App() {
     const [loginModal, setLoginModal] = useState(false)
     const [registerModal, setRegisterModal] = useState(false)
+    const [users, setUsers] = useLocalstorage("users");
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isActive, setIsActive] = useState(true);
+    const [logged, setLogged] = useLocalstorage('login', {
+        display: '',
+        login: false
+    })
 
     return (
         <BrowserRouter>
             <div className="app">
-                {loginModal && <Modal active={loginModal} setActive={setLoginModal}>
+                <Modal active={loginModal} setActive={setLoginModal}>
                     <FormLogin 
                         openModal={setRegisterModal}
-                        closeModal={setLoginModal}/>
-                </Modal>}
-                {registerModal && <Modal active={registerModal} setActive={setRegisterModal}>
+                        closeModal={setLoginModal}
+                        users={users}
+                        setLogged={setLogged}/>
+                </Modal>
+                <Modal active={registerModal} setActive={setRegisterModal}>
                     <FormRegister 
                         openModal={setLoginModal} 
-                        closeModal={setRegisterModal}/>
-                </Modal>}
-                <Header openLoginModal={setLoginModal} openRegisterModal={setRegisterModal}/>
+                        closeModal={setRegisterModal}
+                        setUsers={setUsers}
+                        setIsSuccess={setIsSuccess}/>
+                </Modal>
+                {isSuccess
+                    ? 
+                <Modal 
+                    active={isActive} 
+                    setActive={setIsActive}>
+                        <h1 className="success">Registration successful</h1>
+                </Modal>
+                    :
+                null}
+                <Header 
+                    openLoginModal={setLoginModal} 
+                    openRegisterModal={setRegisterModal}
+                    logged={logged}
+                    setLogged={setLogged}/>
                 <Navigation/>
                 <main>
                     <Routes>
