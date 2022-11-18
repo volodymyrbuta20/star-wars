@@ -1,7 +1,7 @@
 import { GiStarfighter, GiFilmProjector, GiSpaceship} from "react-icons/gi";
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
-import Spinner from "../../components/Spinner/Spinner";
+import Spinner from "../../UI/Spinner/Spinner";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import useHttp from "../../hooks/http.hook";
 import getUrlId from "../../utils/getUrlId";

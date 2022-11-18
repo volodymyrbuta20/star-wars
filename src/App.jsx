@@ -5,7 +5,7 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
 import {MainPage, Characters, Films, Starships, Vehicles, SingleCharacter, SingleFilm, SingleStarship, SingleVehicle} from "./pages";
-import Modal from "./components/Modal/Modal";
+import Modal from "./UI/Modal/Modal";
 import FormLogin from "./components/FormLogin/FormLogin";
 import FormRegister from "./components/Formregister/FormRegister";
 

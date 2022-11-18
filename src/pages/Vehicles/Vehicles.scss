@@ -3,8 +3,12 @@
 .vehicles {
     background: url('../../services/images/background-main.jpeg') no-repeat center/cover;
 
+    &__wrapper {
+        padding: 40px 15px;
+    }
+
     &__header {
-        padding: 40px 80px 0;
+        padding: 0 30px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -12,16 +16,16 @@
 
     &__list {
         margin: 0 auto;
-        padding: 80px;
+        margin-top: 80px;
         display: flex;
-        justify-content: start;
+        justify-content: center;
         align-items: center;
         gap: 40px;
         flex-wrap: wrap;
     }
 
     &__list-item {
-        width: 270px;
+        width: 260px;
         height: 220px;
         position: relative;
         transition: all 0.3s ease-in 0s;

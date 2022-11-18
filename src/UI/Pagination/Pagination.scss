@@ -1,0 +1,42 @@
+@import "../../styles/variables.scss";
+
+.pagination {
+    display: flex;
+    align-items: center;
+}
+
+.pagination button {
+    margin: 0 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    border: 1px solid rgba(154, 153, 152, 0.168);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(154, 153, 152, 0.207);
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+
+button.paginationActive {
+    margin: 0 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $main-color;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+button:disabled {
+    background-color: rgba(145, 145, 145, 0.134);
+    border: none;
+    cursor: auto;
+}

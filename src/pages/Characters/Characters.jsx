@@ -2,10 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ReactImageFallback from "react-image-fallback";
 import InputSearch from '../../components/InputSearch/InputSearch';
-import ReactPaginate from "react-paginate";
-import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
-import Spinner from "../../components/Spinner/Spinner";
+import Spinner from "../../UI/Spinner/Spinner";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import Pagination from '../../UI/Pagination/Pagination';
 import ErrorImg from "../../services/images/no-image-icon-21.png"
 import getUrlId from '../../utils/getUrlId';
 import { _apiBase } from '../../utils/baseUrl';
@@ -48,44 +47,38 @@ const Characters = () => {
     }
 
     const pageCount = Math.ceil(data.count / 10);
-    const changePage = ({ selected }) => {
-        setPage(selected + 1);
-    };
 
-    const spinner = loading ? <Spinner/> : null;
-    const errorMessage = error ? <ErrorMessage/> : null;
+    const spinner = loading ? <Spinner/> : <View charList={charList}/>;
 
     return (
         <div className="characters">
-            <div className="characters__header">
-                <InputSearch onChange={(e) => handleInputChange(e)}/>
-                <ReactPaginate
-                    previousLabel={<MdArrowBackIosNew/>}
-                    nextLabel={<MdArrowForwardIos/>}
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    activeClassName={"paginationActive"}
-                    containerClassName={"pagination"}
-                    marginPagesDisplayed={1}
-                />
-            </div>
+            <div className="characters__wrapper">
+                <div className="characters__header">
+                    <InputSearch onChange={(e) => handleInputChange(e)}/>
+                    {data.count > 10 ? <Pagination pages={pageCount} changePage={setPage}/> : null}
+                </div>
 
-            {errorMessage}
-            {spinner}
-            <ul className="characters__list">
-                {charList.map(item => (
-                    <li className="characters__list-item" key={getUrlId(item.url)}>
-                        <Link to={`/characters/${getUrlId(item.url)}`}>
-                            <ReactImageFallback 
-                                src={`https://starwars-visualguide.com/assets/img/characters/${getUrlId(item.url)}.jpg`} 
-                                fallbackImage={ErrorImg}
-                                alt={item.name} />
-                            <div className="characters__name">{item.name}</div>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+                {error ? <ErrorMessage/> : spinner}
+            </div>
         </div>
+    )
+}
+
+const View = ({charList}) => {
+    return (
+        <ul className="characters__list">
+            {charList.map(item => (
+                <li className="characters__list-item" key={getUrlId(item.url)}>
+                    <Link to={`/characters/${getUrlId(item.url)}`}>
+                        <ReactImageFallback 
+                            src={`https://starwars-visualguide.com/assets/img/characters/${getUrlId(item.url)}.jpg`} 
+                            fallbackImage={ErrorImg}
+                            alt={item.name} />
+                        <div className="characters__name">{item.name}</div>
+                    </Link>
+                </li>
+            ))}
+        </ul>
     )
 }
 

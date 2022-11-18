@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ReactImageFallback from "react-image-fallback";
 import StarWarsService from '../../services/StarWarsService';
 import InputSearch from '../../components/InputSearch/InputSearch';
-import Spinner from '../../components/Spinner/Spinner';
+import Spinner from '../../UI/Spinner/Spinner';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ErrorImg from "../../services/images/no-image-icon-21.png"
 

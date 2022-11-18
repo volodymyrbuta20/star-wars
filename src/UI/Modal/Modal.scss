@@ -52,13 +52,17 @@
     }
 }
 
-.modal.active {
+.modal__active {
     opacity: 1;
     transition: all 0.3s ease;
     pointer-events: all;
 }
 
-.modal__container.visible {
+body#root.app.modal.modal__active {
+    overflow: hidden;
+}
+
+.modal__container-visible {
     transform: scale(1);
     transition: all 0.35s ease;
 }

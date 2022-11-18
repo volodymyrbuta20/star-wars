@@ -1,5 +1,5 @@
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../UI/Modal/Modal";
 
 import "./MainPage.scss";
 

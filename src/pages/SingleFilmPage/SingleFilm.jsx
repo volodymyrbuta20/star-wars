@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from 'react-router-dom';
-import Spinner from "../../components/Spinner/Spinner";
+import Spinner from "../../UI/Spinner/Spinner";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { GiStarfighter, GiCharacter, GiSpaceship, GiRingedPlanet} from "react-icons/gi";
 import useHttp from "../../hooks/http.hook";

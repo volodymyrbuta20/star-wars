@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from 'react-router-dom';
-import Spinner from "../../components/Spinner/Spinner";
+import Spinner from "../../UI/Spinner/Spinner";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { GiCharacter, GiFilmProjector } from "react-icons/gi";
 import getUrlId from '../../utils/getUrlId';
